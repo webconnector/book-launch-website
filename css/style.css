@@ -2233,3 +2233,23 @@
         gap: 10px;
       }
     }
+
+    .form-success {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: #e8f5e9;
+  color: #1b5e20;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.form-error {
+  margin-top: 16px;
+  color: #b42318;
+}
+
+#rsvp-form button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}

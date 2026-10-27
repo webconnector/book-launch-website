@@ -84,3 +84,47 @@
         footerYear.textContent = String(new Date().getFullYear());
       }
     })();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('rsvp-form');
+  const responseFrame = document.getElementById('rsvp-response');
+  const status = form?.querySelector('[data-hh-form-msg]');
+  const submitButton = form?.querySelector('button[type="submit"]');
+
+  if (!form || !responseFrame || !status || !submitButton) {
+    return;
+  }
+
+  let waitingForResponse = false;
+  const originalButtonContent = submitButton.innerHTML;
+
+  // The iframe's initial load is not a form submission.
+  responseFrame.addEventListener('load', () => {
+    if (!waitingForResponse) return;
+
+    waitingForResponse = false;
+    submitButton.disabled = false;
+    submitButton.innerHTML = originalButtonContent;
+
+    status.textContent =
+      'Thank you! Your RSVP has been submitted. We appreciate your response.';
+    status.classList.add('form-success');
+    status.classList.remove('form-error');
+    status.setAttribute('role', 'status');
+
+    form.reset();
+  });
+
+  form.addEventListener('submit', (event) => {
+    // Let the browser validate required fields first.
+    if (!form.checkValidity()) return;
+
+    waitingForResponse = true;
+
+    status.textContent = 'Submitting your RSVP…';
+    status.classList.remove('form-success', 'form-error');
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting…';
+  });
+});
