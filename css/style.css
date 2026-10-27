@@ -17,6 +17,14 @@
       box-sizing: border-box;
     }
 
+.form-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
     html {
       scroll-behavior: smooth;
       scroll-padding-top: 90px;
