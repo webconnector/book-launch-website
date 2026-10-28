@@ -2253,3 +2253,31 @@
   opacity: 0.7;
   cursor: wait;
 }
+
+
+/*Status message for RSVP submission*/
+#rsvp-status {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  line-height: 1.6;
+}
+
+#rsvp-status[hidden] {
+  display: none;
+}
+
+#rsvp-status.form-success {
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+#rsvp-status.form-loading {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+#rsvp-status.form-error {
+  background: #fdecea;
+  color: #b42318;
+}

@@ -85,46 +85,73 @@
       }
     })();
 
+    //rsvpp form handling 
+
+      
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('rsvp-form');
-  const responseFrame = document.getElementById('rsvp-response');
-  const status = form?.querySelector('[data-hh-form-msg]');
-  const submitButton = form?.querySelector('button[type="submit"]');
+  const frame = document.getElementById('rsvp-response');
+  const status = document.getElementById('rsvp-status');
+  const button = form?.querySelector('button[type="submit"]');
 
-  if (!form || !responseFrame || !status || !submitButton) {
-    return;
-  }
+  if (!form || !frame || !status || !button) return;
 
-  let waitingForResponse = false;
-  const originalButtonContent = submitButton.innerHTML;
+  let submitting = false;
+  let originalButtonHTML = button.innerHTML;
+  let timeoutId;
 
-  // The iframe's initial load is not a form submission.
-  responseFrame.addEventListener('load', () => {
-    if (!waitingForResponse) return;
+  // Ignore the iframe's initial load.
+  let initialLoad = true;
 
-    waitingForResponse = false;
-    submitButton.disabled = false;
-    submitButton.innerHTML = originalButtonContent;
+  frame.addEventListener('load', () => {
+    if (initialLoad) {
+      initialLoad = false;
+      return;
+    }
 
+    if (!submitting) return;
+
+    clearTimeout(timeoutId);
+    submitting = false;
+    button.disabled = false;
+    button.innerHTML = originalButtonHTML;
+
+    status.hidden = false;
+    status.className = 'form-success';
     status.textContent =
       'Thank you! Your RSVP has been submitted. We appreciate your response.';
-    status.classList.add('form-success');
-    status.classList.remove('form-error');
-    status.setAttribute('role', 'status');
 
     form.reset();
   });
 
   form.addEventListener('submit', (event) => {
-    // Let the browser validate required fields first.
     if (!form.checkValidity()) return;
 
-    waitingForResponse = true;
+    if (submitting) {
+      event.preventDefault();
+      return;
+    }
 
+    submitting = true;
+
+    status.hidden = false;
+    status.className = 'form-loading';
     status.textContent = 'Submitting your RSVP…';
-    status.classList.remove('form-success', 'form-error');
 
-    submitButton.disabled = true;
-    submitButton.textContent = 'Submitting…';
+    button.disabled = true;
+    button.textContent = 'Submitting…';
+
+    timeoutId = setTimeout(() => {
+      if (!submitting) return;
+
+      submitting = false;
+      button.disabled = false;
+      button.innerHTML = originalButtonHTML;
+
+      status.hidden = false;
+      status.className = 'form-error';
+      status.textContent =
+        'We could not confirm the submission. Please check whether your RSVP was recorded before trying again.';
+    }, 20000);
   });
 });

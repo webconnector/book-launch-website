@@ -557,16 +557,15 @@
 
 
           
-<form
- id="rsvp-form"
-  action="https://script.google.com/macros/s/AKfycbzSQMrKC2fYqYAag0t6xwJzngHH_RXv2vxzI7CvhaGEfdDoeeVqfCJmYPiw5BJp4mra/exec"
-  method="POST"
-  target="rsvp-response"
->
+        <form
+            id="rsvp-form"
+            action="https://script.google.com/macros/s/AKfycbzSQMrKC2fYqYAag0t6xwJzngHH_RXv2vxzI7CvhaGEfdDoeeVqfCJmYPiw5BJp4mra/exec"
+            method="POST"
+            target="rsvp-response">
 
 
   <div class="form-trap" aria-hidden="true">
-    <label for="website">Leave this field empty</label>
+    <label for="website"></label>
     <input
       type="text"
       id="website"
@@ -654,19 +653,24 @@
                 <path d="M22 2 11 13"/>
               </svg>
             </button>
+              
+         
+            <div data-hh-form-msg id="rsvp-status" role="status" aria-live="polite" hidden>
+            </div>
 
             <p class="form-disclaimer">
               Submitting this form expresses your interest in attending; it does not guarantee a confirmed reservation. Your form submission depends on the website host's form service being configured.
             </p>
 
             <div data-hh-form-msg role="status" aria-live="polite"></div>
-          </form>
-<iframe
-  name="rsvp-response"
-  id="rsvp-response"
-  title="RSVP submission response"
-  hidden
-></iframe>
+        </form>
+
+        <iframe name="rsvp-response" id="rsvp-response" title="RSVP submission response" hidden>
+
+        </iframe>
+
+
+
 
 
         </div>
